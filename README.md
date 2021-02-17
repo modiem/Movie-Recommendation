@@ -11,15 +11,33 @@ This dataset consists of the following files:
 - **Hybrid systems** combining **Content-based** and **Collaborative filtering**
 - use **cosine distance** to find similar movies
 
-## Steps :information_desk_person:
+## Steps :pencil:
 - [x] calculate similarity matrix based on metadata/rating
     - [x] vectorization (Tfid)
     - [x] reduce the dimension (TruncatedSVD)
     - [x] save matrix as `.joblib` file
-- [x] calculate cosine_similarity on both matrix
-    - [x] calculate the hybrid similarity based on both standards
-- [x] packaging code
-- [x] construc an API
-- [ ] build `Docker image`
-- [ ] deploy on google cloud run
+    - [x] upload it to google storage
+- [x] calculate cosine_similarity of a sample movie on both matrix
+    - [x] calculate hybrid similarity
+- [x] packaging code (OOP)
+- [x] construct an API (`FastAPI`)
+- [x] build `Docker image`
+```bash
+docker build -t $DOCKER_IMAGE_NAME .
+```
+- [x] container registry
+```bash
+docker push $DOCKER_IMAGE_NAME
+```
+- [x] deploy on google cloud run
+```bash
+gcloud run deploy \
+		--image ${GCR_MULTI_REGION}/${GCP_PROJECT_ID}/${DOCKER_IMAGE_NAME} \
+		--platform managed \
+		--region ${GCR_REGION} \
+		--set-env-vars "GOOGLE_APPLICATION_CREDENTIALS=/credentials.json"
+
+```
+[Try it out?](https://movie-recommender-5i6qxbf74a-ez.a.run.app/docs)
 - [ ] plug it to a front page
+
