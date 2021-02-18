@@ -21,6 +21,8 @@ This dataset consists of the following files:
     - [x] calculate hybrid similarity
 - [x] packaging code (OOP)
 - [x] construct an API (`FastAPI`)
+    - [x] return `n` recommended movies as query
+    - [x] return similarity df
 - [x] build `Docker image`
 ```bash
 docker build -t $DOCKER_IMAGE_NAME .
@@ -32,12 +34,12 @@ docker push $DOCKER_IMAGE_NAME
 - [x] deploy on google cloud run
 ```bash
 gcloud run deploy \
-		--image ${GCR_MULTI_REGION}/${GCP_PROJECT_ID}/${DOCKER_IMAGE_NAME} \
+		--image ${DOCKER_IMAGE_NAME} \
 		--platform managed \
 		--region ${GCR_REGION} \
 		--set-env-vars "GOOGLE_APPLICATION_CREDENTIALS=/credentials.json"
 
 ```
-[Try it out?](https://movie-recommender-5i6qxbf74a-ez.a.run.app/docs)
+[Try it out?](https://movie-recommender-5i6qxbf74a-ez.a.run.app)
 - [ ] plug it to a front page
 

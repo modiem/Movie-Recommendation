@@ -14,17 +14,26 @@ run_api:
 	uvicorn api.fast:app --reload  # load web server with code autoreload
 
 # ----------------------------------
-#         Deployment
+#         DOCKER & Deployment
 # ----------------------------------
 GCR_MULTI_REGION=eu.gcr.io
 GCP_PROJECT_ID=movie-recommender-api-304919
-DOCKER_IMAGE_NAME=api
+DOCKER_IMAGE_NAME=${GCR_MULTI_REGION}/${GCP_PROJECT_ID}/api
+GCR_REGION=europe-west4
+
+build_image:
+	docker build -t ${DOCKER_IMAGE_NAME} .
+
+push_image:
+	docker push ${DOCKER_IMAGE_NAME}
+
 deploy_gcp:
 	gcloud run deploy \
-		--image ${GCR_MULTI_REGION}/${GCP_PROJECT_ID}/${DOCKER_IMAGE_NAME} \
+		--image ${DOCKER_IMAGE_NAME} \
 		--platform managed \
 		--region ${GCR_REGION} \
 		--set-env-vars "GOOGLE_APPLICATION_CREDENTIALS=/credentials.json"
+
 
 # ----------------------------------
 #    CLEANING COMMAND
