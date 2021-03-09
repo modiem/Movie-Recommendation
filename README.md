@@ -1,7 +1,26 @@
 # :movie_camera: Movie Recommendation API
+[![Front_end][screenshot]][hyperlink]
+ 
+[hyperlink]: https://modiem.herokuapp.com/ 
+[screenshot]: img/Screenshot.png "Screen Shot"
+
+## Usage 
+```python
+import requests
+url = "https://movie-recommender-5i6qxbf74a-ez.a.run.app/recommendation/"
+
+### 
+sample_movie="Jumanji (1995)"
+
+params = dict(samples=sample_movie,
+                      n_movies=1 ## number of recommendations to return
+                      )
+response = requests.get(url, params=params).json()
+print(response)
+```
 
 ## Data :open_file_folder:
-This dataset consists of the following files:
+The dataset consists of the following files:
 - **movies.csv**: contains `movieId`, `imdbId`, `tmdbId`
 - **tags.csv**: contains `userId`, `movieId`, `tag`, `timestamp`
 - **ratings**: contains `userId`, `movieId`, `rating`, `timestamp`
@@ -11,7 +30,7 @@ This dataset consists of the following files:
 - **Hybrid systems** combining **Content-based** and **Collaborative filtering**
 - use **cosine distance** to find similar movies
 
-## Steps :pencil:
+### In steps :pencil:
 - [x] calculate similarity matrix based on metadata/rating
     - [x] vectorization (Tfid)
     - [x] reduce the dimension (TruncatedSVD)
@@ -40,6 +59,6 @@ gcloud run deploy \
 		--set-env-vars "GOOGLE_APPLICATION_CREDENTIALS=/credentials.json"
 
 ```
-[Try it out?](https://movie-recommender-5i6qxbf74a-ez.a.run.app)
-- [ ] plug it to a front page
+- [x] plug in the front-end
+
 
