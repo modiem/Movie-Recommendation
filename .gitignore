@@ -4,3 +4,4 @@
 gcp_key
 data
 *.joblib
+*.ipynb
