@@ -47,3 +47,4 @@ clean:
 	@rm -fr __init__.py
 	@rm -fr build
 	@rm -fr dist
+	@rm -fr .DS_Store

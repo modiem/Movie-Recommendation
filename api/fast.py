@@ -1,3 +1,4 @@
+import re
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from MovieRecommendation.recommender import Recommender
@@ -16,28 +17,19 @@ app.add_middleware(
 def index():
     return {"message": "Welcome!"}
 
-@app.get("/similarity_df/")
-def get_sim_df(sample,
-               basis: str = "hybrid"):
-
-    sample = Recommender(sample,
-                        basis=basis)
-    
-    df = sample.get_similarity_df()
-
-    result = {"basis": basis,
-              "similarity_df": df}
-    return result
 
 @app.get("/recommendation/")
-def create_recommendations(sample,
+def create_recommendations(samples: str,
                            basis: str="hybrid",
                            n_movies: int=3):
+    """
+    Input: one or more 'sample movies' seperated by comma.
+    Output: n recommendations.
+    """
+    samples=[f.strip("''") for f in re.split(r''', (?='|")''', samples)]
 
-    sample = Recommender(sample,
-                        basis=basis)
-    
-    recommendations = sample.get_recommendation(n_movies)
+    recommendations = Recommender(samples, 
+                                  basis=basis).get_recommendation(n_movies=n_movies)
 
     result = {"basis": basis,
               "recommendations": 
